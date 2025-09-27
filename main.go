@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/rand"
 	"errors"
 	"fmt"
 	"time"
@@ -14,9 +13,9 @@ type Bin struct {
 	name    string
 }
 
-// type BinList struct {
-// 	binList []Bin
-// }
+type BinList struct {
+	bins []Bin
+}
 
 func newBin(name string) (*Bin, error) {
 	if name == "" {
@@ -24,7 +23,7 @@ func newBin(name string) (*Bin, error) {
 	}
 
 	bin := &Bin{
-		id:      rand.Text(),
+		id:      "default_id",
 		private: false,
 		created: time.Now(),
 		name:    name,
@@ -33,13 +32,32 @@ func newBin(name string) (*Bin, error) {
 	return bin, nil
 }
 
-func main() {
-	name := promptData("Введите имя bina")
-	bin, err := newBin(name)
-	if err != nil {
-		return
+func newBinList(bin *Bin) *BinList {
+
+	binArray := []Bin{*bin}
+
+	binList := &BinList{
+		bins: binArray,
 	}
-	fmt.Print(bin)
+
+	return binList
+}
+
+func main() {
+	for {
+		var isCreated string
+		fmt.Println("Создать bin yes/no?")
+		fmt.Scan(&isCreated)
+		if isCreated != "yes" {
+			break
+		}
+		name := promptData("Введите имя bina")
+		bin, err := newBin(name)
+		if err != nil {
+			return
+		}
+		fmt.Print(bin)
+	}
 }
 
 func promptData(prompt string) string {
