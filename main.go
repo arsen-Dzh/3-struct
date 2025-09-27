@@ -1,47 +1,9 @@
 package main
 
 import (
-	"errors"
+	"demo/3-struct/bins"
 	"fmt"
-	"time"
 )
-
-type Bin struct {
-	id      string
-	private bool
-	created time.Time
-	name    string
-}
-
-type BinList struct {
-	bins []Bin
-}
-
-func newBin(name string) (*Bin, error) {
-	if name == "" {
-		return nil, errors.New("INVALID_NAME")
-	}
-
-	bin := &Bin{
-		id:      "default_id",
-		private: false,
-		created: time.Now(),
-		name:    name,
-	}
-
-	return bin, nil
-}
-
-func newBinList(bin *Bin) *BinList {
-
-	binArray := []Bin{*bin}
-
-	binList := &BinList{
-		bins: binArray,
-	}
-
-	return binList
-}
 
 func main() {
 	for {
@@ -52,7 +14,7 @@ func main() {
 			break
 		}
 		name := promptData("Введите имя bina")
-		bin, err := newBin(name)
+		bin, err := bins.NewBin(name)
 		if err != nil {
 			return
 		}
